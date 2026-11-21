@@ -1,77 +1,32 @@
-# Earshot
+# LocalBuds
+A lightweight, privacy-focused, offline Android companion app for Bose QuietComfort Ultra Earbuds—giving you full hardware control without the bloat or tracking of the official app.
 
-**One Android app for your Bluetooth headset, whatever the brand.** No account, no cloud, no
-analytics, no internet permission.
+## Legal Disclaimer
+> [!CAUTION]
+> **Use this software entirely at your own risk. I am not legally responsible for any damage to your personal devices, nor am I responsible for any damage, bricking, or malfunction of your earbuds. ROOTED DEVICES CARRY SIGNIFICANT RISKS TO SYSTEM STABILITY AND SECURITY—proceed only if you understand what you are doing.**
+>
+> LocalBuds is an independent, open-source project and is not affiliated with, sponsored, or endorsed by Bose Corporation in any way.
 
-<p align="center">
-  <img src="docs/screenshots/01-home.png" width="23%" alt="Home: battery dial, listening modes and noise control">
-  <img src="docs/screenshots/02-sound.png" width="23%" alt="Sound: the Pro EQ">
-  <img src="docs/screenshots/03-sleep.png" width="23%" alt="Sleep: wake-up alarm, sleep timer and noise cancelling for the night">
-  <img src="docs/screenshots/04-tools.png" width="23%" alt="Tools: Controls, codec, call audio, Find my headphones, Lab">
-</p>
+## Features
+- **100% Offline & Private Control:** Operates completely offline with zero cloud functionality, account logins, telemetry, or background data tracking, keeping your earbuds and usage habits fully private.
+- **Rooted Android & System Overlays:** Unlocks deep Android integration on rooted devices, supporting custom overlays and mapping left and right earbud touch buttons to system-level actions.
+- **Dedicated QC Ultra Hardware Support:** Built specifically around the Bluetooth Low Energy (BLE) protocols for the Bose QuietComfort Ultra Earbuds Gen 1 (fully tested) and Gen 2 (experimental support).
+- **Home Screen Widgets & Quick Settings Tiles:** Control your earbuds directly from your launcher or notification shade without even opening the app.
+- **Instant Noise Cancellation Switching:** Seamlessly toggle between Quiet (Active Noise Cancellation), Aware (Transparency), and custom noise-control modes on the fly.
+- **Multipoint Bluetooth Management:** View and switch between multiple connected Bluetooth devices directly from your phone.
+- **Lightweight, Fast & Snappy:** Engineered with minimal overhead for instant Bluetooth connections, smooth performance, and negligible battery drain by bypassing cloud bloat.
+- **Real-Time Battery Monitoring:** Check accurate, live battery percentages for both the left and right earbuds right on your device.
+- **Android Fast Pair Integration:** Utilizes Android's native Fast Pair protocol for quick discovery and near-seamless initial pairing.
 
-## What it does
+## Hardware Notes
+Rooted mode and system-level overlays have only been tested on **Google Pixel devices running stock Android OS**. Because manufacturers heavily modify Android frameworks (such as One UI, HyperOS, or OxygenOS), behavior, compatibility, and stability may differ on non-Pixel devices.
 
-- **Any headset:** battery, a Pro EQ with a preset per headset (AutoEq import, volume boost), a
-  codec panel, louder calls, a mic check, button remapping, automations, a Quick Settings tile, a
-  widget, and a universal remote to connect, disconnect, rename and forget it.
-- **Sleep** (new in 0.9): a 15 min to 6 h sleep timer with real rain, ocean and fire recordings,
-  noise or your own sounds; noise cancelling off for the night; and wake-up alarms in the earbuds,
-  on the phone or both, with the phone as a safety net.
-- **Supported headsets** also get their own controls: noise modes, the headset's EQ, buttons and
-  settings, straight over Bluetooth on the maker's own protocol.
-- **Open and careful:** a read-only Lab scanner and a connection report for every supported brand;
-  firmware updates, factory resets and unpairing are never sent.
+## Build & Installation
+- **Compile from Source:** Clone the repository, open the project in **Android Studio**, and build the APK directly using Gradle.
+- **Pre-compiled Releases:** Download the latest ready-to-install APK directly from the **GitHub Releases** page and sideload it onto your device.
 
-## Supported headsets
+## Contributions
+Contributions, bug reports, and feature requests are warmly welcomed! Feel free to fork the repository, modify the codebase, or submit a pull request to help improve the project.
 
-| Brand | Status | Models |
-|---|---|---|
-| **Bose** | QC Ultra Headphones (2nd Gen) tested; others experimental | QC Ultra Headphones and Earbuds, QC Headphones, QC SC, QC45, QC SE, QC Earbuds II, Ultra Open Earbuds; basic: QC Earbuds (2020), NC 700 |
-| **Soundcore** | Sleep A30 tested; 35 models experimental | Liberty 3 Pro / 4 / 4 NC / 5, P31i, P40i, R50i NC, R60i NC, A30i, Space A40 / One / One Pro / Q45 / 2 and more |
-| **Sennheiser** | Experimental | MOMENTUM 4 / 5, ACCENTUM / Plus / TW, MOMENTUM True Wireless 3 / 4, MOMENTUM Sport |
-| **Sony** | Experimental | WH-1000XM5 / XM6, WF-1000XM4 / XM5 / XM6, LinkBuds, ULT WEAR, WH-CH720N, WF-C510 / C700N / C710N |
-| **Skullcandy** | Experimental | Crusher 1080 ANC, Method 360 ANC, Method 540 ANC |
-| **JBL** | Experimental | 2021–24 models over Bluetooth LE: Wave / Vibe / Tune Buds 2 and Flex 2, Tune Flex / Beam / Buds, Live Pro 2, Live 660 / 770NC, Tour One M2, Tour Pro 2 and more |
-| **AirPods, Beats** | Battery only | Left, right and case battery |
-| **Everything else** | Any-headset features | Shown by its own name; nothing is sent to it |
-
-Experimental means built from protocol research and tested against a virtual headset, not yet on
-real hardware. Reports are very welcome: open an issue with **Tools → Lab → Copy connection report**.
-Per-model details, requirements and limitations: [docs/supported-headsets.md](docs/supported-headsets.md).
-
-## Install
-
-Download `earshot-<version>.apk` from [Releases](../../releases) and open it on your phone
-(Android 9 or newer). Close the maker's app while Earshot controls that headset: only one app can
-hold its control channel. [Shizuku](https://shizuku.rikka.app/) is optional (codec switching).
-No headset at hand? **Try demo mode** on the welcome screen.
-
-Build it yourself: `./gradlew :app:assembleFossDebug` (Windows: `.\gw.cmd :app:assembleFossDebug`). The Play
-version is `:app:assemblePlayDebug`; signing for releases: [docs/release-signing.md](docs/release-signing.md).
-
-What changed: [CHANGELOG.md](CHANGELOG.md) · Protocol research: [docs/research/](docs/research/)
-
-## Credits
-
-Protocol knowledge builds on these MIT-licensed projects: [bosectl](https://github.com/aaronsb/bosectl),
-[Quiet Rebellion](https://github.com/MadEyez/quietrebellion), [soundcorebridge](https://github.com/mervin008/soundcorebridge),
-[momentum4-control](https://github.com/Ariazonaa/momentum4-control), [momentumctl](https://codeberg.org/galen/momentumctl),
-[SonyHeadphonesClient](https://github.com/mos9527/SonyHeadphonesClient), [jbl-control](https://github.com/AhmadRun/jbl-control), and
-[AutoEq](https://github.com/jaakkopasanen/AutoEq) for the correction curves. OpenSCQ30 (GPL-3.0) and
-Gadgetbridge (AGPL-3.0) were read for protocol facts only. Fonts: Barlow, JetBrains Mono, Sora and Plus Jakarta Sans (SIL OFL
-1.1). Sleep sounds: public-domain field recordings from [radio aporee ::: maps](https://aporee.org/maps/)
-(recordists named in the app's About screen and in `tools/sleep-sounds/sources.json`). Reference
-copies and licences: `docs/reference/`.
-
-## Not affiliated
-
-Earshot is not affiliated with, endorsed by or supported by Bose, Apple, Skullcandy, Anker
-(Soundcore), Sony, Sennheiser, JBL (Harman) or any other headphone maker. Bose and QuietComfort are trademarks of
-Bose Corporation; AirPods and Beats of Apple Inc.; Skullcandy and Crusher of Skullcandy, Inc.;
-Anker and Soundcore of Anker Innovations Limited; Sony of Sony Group Corporation; Sennheiser of
-Sennheiser electronic SE & Co. KG; JBL of Harman International Industries. Other names belong to their owners.
-
-## Licence
-
-MIT. See `LICENSE`.
+## License
+This project is licensed under the **MIT License** — see the `LICENSE` file for details.
