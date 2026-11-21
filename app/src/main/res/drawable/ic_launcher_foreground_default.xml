@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  LocalBuds default launcher icon foreground:
+  Minimalistic sculpted earbud silhouette with metallic chamfer stem,
+  emitting crisp forward acoustic waves. Designed within 108dp adaptive canvas.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <group
+        android:scaleX="0.9"
+        android:scaleY="0.9"
+        android:pivotX="54"
+        android:pivotY="54">
+
+        <!-- Outer Acoustic Wave 3 -->
+        <path
+            android:pathData="M66,35 A24,24 0 0 1 66,73"
+            android:strokeWidth="3.5"
+            android:strokeColor="#4D38BDF8"
+            android:strokeLineCap="round"
+            android:fillColor="#00000000" />
+
+        <!-- Mid Acoustic Wave 2 -->
+        <path
+            android:pathData="M59,41 A16,16 0 0 1 59,67"
+            android:strokeWidth="3.5"
+            android:strokeColor="#9938BDF8"
+            android:strokeLineCap="round"
+            android:fillColor="#00000000" />
+
+        <!-- Inner Acoustic Wave 1 -->
+        <path
+            android:pathData="M52,47 A8,8 0 0 1 52,61"
+            android:strokeWidth="3.5"
+            android:strokeColor="#FF38BDF8"
+            android:strokeLineCap="round"
+            android:fillColor="#00000000" />
+
+        <!-- Earbud Acoustic Bulb / Body -->
+        <path
+            android:pathData="M38,36 C31,36 26,41 26,48 C26,55 30,59 36,60 L36,70 C36,72.5 38,74.5 40.5,74.5 C43,74.5 45,72.5 45,70 L45,58 C47.5,55.5 49,52 49,48 C49,41 44,36 38,36 Z">
+            <aapt:attr name="android:fillColor">
+                <gradient
+                    android:type="linear"
+                    android:startX="26"
+                    android:startY="36"
+                    android:endX="49"
+                    android:endY="75"
+                    android:startColor="#FFFFFFFF"
+                    android:endColor="#FFE2E8F0" />
+            </aapt:attr>
+        </path>
+
+        <!-- Sculpted Stem Accent / Capacitive Pill Surface -->
+        <path
+            android:pathData="M38,62 L38,71 C38,72 39,73 40.5,73 C42,73 43,72 43,71 L43,62 Z"
+            android:fillColor="#FF94A3B8" />
+
+        <!-- Silicone Ear Tip Nozzle -->
+        <path
+            android:pathData="M48,44 L53,42 C54.5,41.5 56,42.5 56,44 L56,52 C56,53.5 54.5,54.5 53,54 L48,52 Z"
+            android:fillColor="#FFCBD5E1" />
+
+        <!-- Subtle Glow Dot / Indicator LED -->
+        <path
+            android:pathData="M38,44 A2,2 0 1 1 37.9,44"
+            android:fillColor="#FF38BDF8" />
+    </group>
+</vector>

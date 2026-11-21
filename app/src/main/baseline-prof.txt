@@ -1,0 +1,172 @@
+# LocalBuds's own ART baseline profile (hand-written, 1.0 performance pass CO1 / ST1).
+# =============================================
+# Why: the libraries (Compose, navigation, lifecycle, ...) ship their own rules, but no rule
+# covered com/localbuds, so every LocalBuds class on the start path ran in the interpreter or the
+# JIT until the phone's background dexopt reached it. That happens about a day after each
+# install or update. Sideloaded GitHub / F-Droid installs never get Play cloud profiles, and
+# the Play closed test has too few users for one to form. AGP merges this file with the
+# library rules for both flavours. In release builds R8 expands the wildcards and rewrites the
+# names it obfuscates; the result ships as assets/dexopt/baseline.prof. On a Play install ART
+# compiles it at install time. On a sideload ProfileInstaller (already in the APK through
+# Compose, activity, lifecycle and navigation) hands it to ART at the first start, and it is
+# compiled at the next idle dexopt. Debug builds are never profile-compiled.
+#
+# It only changes what ART compiles ahead of time (H), marks as startup (S) or post-startup (P) code and puts in
+# the app image (class lines). It never changes behaviour. A stale rule is harmless: a class
+# that moved simply stops matching.
+#
+# Scope: the process start, the root composable and the first screens, nothing else. Left out
+# on purpose: the vendor wire stacks (BMAP, Bragi, Soundcore, ...). A connect is waiting on
+# Bluetooth there, not on the CPU. Also left out: Sound, Tools, More, the Lab, demo devices
+# and the night-time Sleep runtime. Add them only after measuring, because every rule makes
+# the on-device odex and the install-time dexopt bigger.
+# Generating the profile with a Macrobenchmark module (ST1 / SI0) would replace this file.
+#
+# Syntax (one rule per line, '#' starts a comment line):
+#   method rule:  FLAGS + class descriptor, an arrow, then name(params)return
+#   class rule:   the class descriptor alone (L, slash-separated name, semicolon)
+#   FLAGS:        H hot (compiled ahead of time), S used during startup, P used after startup
+#   wildcards:    two stars = any characters including the package slash;
+#                 one star  = any characters except the slash. That still takes Kotlin's
+#                 $-nested classes, Compose lambdas and the FooKt file classes.
+# A mistyped rule is dropped silently, so check the build output after changing this file:
+#   app/build/intermediates/merged_art_profile/<variant>/merge<Variant>ArtProfile/baseline-prof.txt
+#     must contain these com/localbuds lines;
+#   app/build/intermediates/r8_art_profile/<variant>/expand<Variant>ArtProfileWildcards/baseline-prof.txt
+#     must list concrete com/localbuds methods and classes;
+#   the release APK's assets/dexopt/baseline.prof must grow (9.2 KB before this file).
+
+# Process start: LocalBudsApp.onCreate, the container and what startUnlocked creates
+# =============================================
+# LocalBudsApp also takes LocalBudsAppKt (the appContainer extension) and the unlock receiver.
+HSPLcom/localbuds/LocalBudsApp*;->**(**)**
+HSPLcom/localbuds/AppContainer*;->**(**)**
+HSPLcom/localbuds/MainActivity*;->**(**)**
+
+Lcom/localbuds/LocalBudsApp*;
+Lcom/localbuds/AppContainer*;
+Lcom/localbuds/MainActivity*;
+
+# The contract models (HeadphoneState, ConnectionState, SleepState, ...). Every StateFlow
+# emission compares them and every screen reads them. One star keeps core/fake out.
+HSPLcom/localbuds/core/*;->**(**)**
+
+Lcom/localbuds/core/*;
+
+# The repository the app sees, the session base under every vendor stack, the connection loop,
+# device pick and family routing. They run at every start (the router builds every driver)
+# and on every connect.
+HSPLcom/localbuds/service/RoutingHeadphoneRepository*;->**(**)**
+HSPLcom/localbuds/service/VendorDriver*;->**(**)**
+HSPLcom/localbuds/service/session/**->**(**)**
+HSPLcom/localbuds/bt/ConnectionManager*;->**(**)**
+HSPLcom/localbuds/bt/LinkSource*;->**(**)**
+HSPLcom/localbuds/bt/DeviceFinder*;->**(**)**
+HSPLcom/localbuds/bt/DeviceCandidate*;->**(**)**
+HSPLcom/localbuds/bt/FindResult*;->**(**)**
+HSPLcom/localbuds/bt/DeviceSelection*;->**(**)**
+HSPLcom/localbuds/bt/DevicePick*;->**(**)**
+HSPLcom/localbuds/bt/AudioClass*;->**(**)**
+HSPLcom/localbuds/bt/DevicePrefs*;->**(**)**
+HSPLcom/localbuds/bt/DeviceFamily*;->**(**)**
+HSPLcom/localbuds/bt/AudioLinkMonitor*;->**(**)**
+# DeviceFinder's held Bluetooth profile proxies (ProfileProxyCache.kt, new in 1.0).
+HSPLcom/localbuds/bt/ProfileProxy*;->**(**)**
+HSPLcom/localbuds/bt/HeldProfileProxies*;->**(**)**
+
+Lcom/localbuds/service/RoutingHeadphoneRepository*;
+Lcom/localbuds/service/VendorDriver*;
+Lcom/localbuds/service/session/**;
+Lcom/localbuds/bt/ConnectionManager*;
+Lcom/localbuds/bt/LinkSource*;
+Lcom/localbuds/bt/DeviceFinder*;
+Lcom/localbuds/bt/DeviceCandidate*;
+Lcom/localbuds/bt/FindResult*;
+Lcom/localbuds/bt/DeviceSelection*;
+Lcom/localbuds/bt/DevicePick*;
+Lcom/localbuds/bt/AudioClass*;
+Lcom/localbuds/bt/DevicePrefs*;
+Lcom/localbuds/bt/DeviceFamily*;
+Lcom/localbuds/bt/AudioLinkMonitor*;
+Lcom/localbuds/bt/ProfileProxy*;
+Lcom/localbuds/bt/HeldProfileProxies*;
+
+# ExtrasInitializer starts the automation engine, the low-battery alert and the surface
+# refresher at every process start. The tile service, the widget receiver and the schedule
+# receiver can be the component that starts the process, so all of extras counts as start code.
+HSPLcom/localbuds/extras/**->**(**)**
+
+Lcom/localbuds/extras/**;
+
+# The rest of LocalBudsApp.startUnlocked and UiDependencies.from: created at every start, before
+# Home draws (call listeners, Shortcuts remapper, per-headset EQ, timeline, presence, tuning,
+# codec, mic check).
+HSPLcom/localbuds/audio/AudioTuningRepositoryImpl*;->**(**)**
+HSPLcom/localbuds/audio/HeadsetEqMemory*;->**(**)**
+HSPLcom/localbuds/call/CallAudioRepositoryImpl*;->**(**)**
+HSPLcom/localbuds/codec/CodecRepositoryImpl*;->**(**)**
+HSPLcom/localbuds/mic/MicCheckRepositoryImpl*;->**(**)**
+HSPLcom/localbuds/shortcut/ShortcutEngine*;->**(**)**
+HSPLcom/localbuds/shortcut/ShortcutPrefs*;->**(**)**
+HSPLcom/localbuds/bt/TimelineRecorder*;->**(**)**
+HSPLcom/localbuds/bt/TimelineStore*;->**(**)**
+HSPLcom/localbuds/bt/CompanionPresence*;->**(**)**
+
+Lcom/localbuds/audio/AudioTuningRepositoryImpl*;
+Lcom/localbuds/audio/HeadsetEqMemory*;
+Lcom/localbuds/call/CallAudioRepositoryImpl*;
+Lcom/localbuds/codec/CodecRepositoryImpl*;
+Lcom/localbuds/mic/MicCheckRepositoryImpl*;
+Lcom/localbuds/shortcut/ShortcutEngine*;
+Lcom/localbuds/shortcut/ShortcutPrefs*;
+Lcom/localbuds/bt/TimelineRecorder*;
+Lcom/localbuds/bt/TimelineStore*;
+Lcom/localbuds/bt/CompanionPresence*;
+
+# The Sleep runtime the container creates at start: it re-arms the wake alarms and picks up a
+# night in progress. LockedAlarms is the first call in onCreate (direct boot check) and
+# SleepShortcut publishes the launcher shortcut. Its night-time players stay out.
+HSPLcom/localbuds/sleep/SleepRepositoryImpl*;->**(**)**
+HSPLcom/localbuds/sleep/SleepStore*;->**(**)**
+HSPLcom/localbuds/sleep/SleepScheduler*;->**(**)**
+HSPLcom/localbuds/sleep/LockedAlarms*;->**(**)**
+HSPLcom/localbuds/sleep/SleepShortcut*;->**(**)**
+
+Lcom/localbuds/sleep/SleepRepositoryImpl*;
+Lcom/localbuds/sleep/SleepStore*;
+Lcom/localbuds/sleep/SleepScheduler*;
+Lcom/localbuds/sleep/LockedAlarms*;
+Lcom/localbuds/sleep/SleepShortcut*;
+
+# First frame: root composable, navigation, theme, shared components, Home
+# =============================================
+# One star keeps this to the root package: LocalBudsAppKt (LocalBudsRoot, its lambdas),
+# ComposableSingletons$LocalBudsAppKt, AutoConnectOnce and UiDependencies.
+HSPLcom/localbuds/ui/*;->**(**)**
+HSPLcom/localbuds/ui/nav/**->**(**)**
+HSPLcom/localbuds/ui/theme/**->**(**)**
+HSPLcom/localbuds/ui/common/**->**(**)**
+HSPLcom/localbuds/ui/home/**->**(**)**
+
+Lcom/localbuds/ui/*;
+Lcom/localbuds/ui/nav/**;
+Lcom/localbuds/ui/theme/**;
+Lcom/localbuds/ui/common/**;
+Lcom/localbuds/ui/home/**;
+
+# The first launch after an install shows onboarding. The first launch after an update shows
+# What's New. A Play install compiles the profile at install time, so these two gain most there;
+# a sideload compiles it only at the next idle dexopt, after both screens are gone.
+HSPLcom/localbuds/ui/onboarding/**->**(**)**
+HSPLcom/localbuds/ui/whatsnew/**->**(**)**
+
+Lcom/localbuds/ui/onboarding/**;
+Lcom/localbuds/ui/whatsnew/**;
+
+# Sleep tab
+# =============================================
+# The tab's first open builds the carousel, the sound library and the night cards. The
+# launcher's "Start sleep" shortcut also opens it at launch, so it keeps the start flags.
+HSPLcom/localbuds/ui/sleep/**->**(**)**
+
+Lcom/localbuds/ui/sleep/**;

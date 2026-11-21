@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <group
+        android:scaleX="0.9"
+        android:scaleY="0.9"
+        android:pivotX="54"
+        android:pivotY="54">
+
+        <!-- Acoustic waves -->
+        <path
+            android:pathData="M66,35 A24,24 0 0 1 66,73"
+            android:strokeWidth="3.5"
+            android:strokeColor="#FFFFFF"
+            android:strokeAlpha="0.4"
+            android:strokeLineCap="round"
+            android:fillColor="#00000000" />
+
+        <path
+            android:pathData="M59,41 A16,16 0 0 1 59,67"
+            android:strokeWidth="3.5"
+            android:strokeColor="#FFFFFF"
+            android:strokeAlpha="0.7"
+            android:strokeLineCap="round"
+            android:fillColor="#00000000" />
+
+        <path
+            android:pathData="M52,47 A8,8 0 0 1 52,61"
+            android:strokeWidth="3.5"
+            android:strokeColor="#FFFFFF"
+            android:strokeLineCap="round"
+            android:fillColor="#00000000" />
+
+        <!-- Earbud Body -->
+        <path
+            android:pathData="M38,36 C31,36 26,41 26,48 C26,55 30,59 36,60 L36,70 C36,72.5 38,74.5 40.5,74.5 C43,74.5 45,72.5 45,70 L45,58 C47.5,55.5 49,52 49,48 C49,41 44,36 38,36 Z"
+            android:fillColor="#FFFFFF" />
+
+        <!-- Ear tip -->
+        <path
+            android:pathData="M48,44 L53,42 C54.5,41.5 56,42.5 56,44 L56,52 C56,53.5 54.5,54.5 53,54 L48,52 Z"
+            android:fillColor="#FFFFFF" />
+    </group>
+</vector>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- LocalBuds launcher icon background: deep obsidian acoustic canvas with subtle gradient -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path android:pathData="M0,0 H108 V108 H0 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:type="radial"
+                android:centerX="54"
+                android:centerY="54"
+                android:gradientRadius="72"
+                android:startColor="#FF181C24"
+                android:endColor="#FF090B0E" />
+        </aapt:attr>
+    </path>
+    <!-- Subtle concentric acoustic wave rings -->
+    <path
+        android:pathData="M54,20 A34,34 0 1 1 53.9,20"
+        android:strokeWidth="1"
+        android:strokeAlpha="0.08"
+        android:strokeColor="#FFFFFFFF"
+        android:fillColor="#00000000" />
+    <path
+        android:pathData="M54,10 A44,44 0 1 1 53.9,10"
+        android:strokeWidth="1"
+        android:strokeAlpha="0.05"
+        android:strokeColor="#FFFFFFFF"
+        android:fillColor="#00000000" />
+</vector>
