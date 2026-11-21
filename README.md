@@ -1,6 +1,10 @@
 # LocalBuds
 A lightweight, privacy-focused, offline Android companion app for Bose QuietComfort Ultra Earbuds—giving you full hardware control without the bloat or tracking of the official app.
 
+| Home Screen | Settings |
+| :---: | :---: |
+| <img src="https://github.com/user-attachments/assets/85a464c3-91dd-409b-b3f8-7cef4bef4cc2" alt="Home Screen" width="280" /> | <img src="https://github.com/user-attachments/assets/23e82f8d-8caf-490a-ad79-3f72c187805f" alt="Settings" width="280" /> |
+
 ## Legal Disclaimer
 > [!CAUTION]
 > **Use this software entirely at your own risk. I am not legally responsible for any damage to your personal devices, nor am I responsible for any damage, bricking, or malfunction of your earbuds. ROOTED DEVICES CARRY SIGNIFICANT RISKS TO SYSTEM STABILITY AND SECURITY—proceed only if you understand what you are doing.**
